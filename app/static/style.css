@@ -1,0 +1,48 @@
+body
+{
+    font-family: helvetica;
+    padding: 10%;
+    text-align: center;
+}
+.box
+{
+    background-color: white;
+    padding:10px;
+    text-align: center;
+    display: center;
+    border: 1px solid black;
+    width: 40%;
+    height: 40%;
+    display: inline-block;
+}
+
+
+input
+{
+    width: 20%;
+    font-size: 15px;
+    padding: 8px;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+button, a
+{
+    background-color: #3c3c3c;
+    border: 2px solid #3c3c3c;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin-top: -10px;
+    transition-duration: 0.6s;
+    cursor: pointer;
+}
+
+button:hover, a:hover {
+  background-color: white;
+  color: #3c3c3c;
+}
