@@ -5,7 +5,7 @@ function login() {
     console.log(password.value)
   if ((password.value == "password") && (username.value == "username"))
   {
-     window.open('target.html')
+     window.location.href = "landing.html";
   }
   else
   {
@@ -15,4 +15,12 @@ function login() {
 function signup()
 {
     //figure out how to get this into a database I guess?
+}
+
+function logOut()
+{
+    if(confirm("are you sure you want to log out?"))
+    {
+         window.location.href = "index.html";
+    }
 }
