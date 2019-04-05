@@ -1,6 +1,9 @@
-body
+*
 {
     font-family: helvetica;
+}
+.login
+{
     padding: 10%;
     text-align: center;
 }
@@ -16,6 +19,28 @@ body
     display: inline-block;
 }
 
+#profilePic
+{
+    border-color: black;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    vertical-align:middle;
+    padding:5px;
+}
+
+.topBar {
+    background: #BFCDF5;
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+}
+
+.searchBar
+{
+    text-align: center;
+    padding: 5px;
+}
 
 input
 {
