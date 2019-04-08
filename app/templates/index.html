@@ -1,6 +1,26 @@
 <head>
     <title>Dogstagram</title>
     <link rel="stylesheet" type="text/css" href="../static/style.css">
+
+    <!--add Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAI5CEVqPwnDM7p6WmDIyQLx2V6QdfL2Nc",
+        authDomain: "dogstagram-b019f.firebaseapp.com",
+        databaseURL: "https://dogstagram-b019f.firebaseio.com",
+        projectId: "dogstagram-b019f",
+        storageBucket: "dogstagram-b019f.appspot.com",
+        messagingSenderId: "495415462838"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+    <!-- Add the Firebase and Cloud Firestore libraries to app -->
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-firestore.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
