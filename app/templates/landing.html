@@ -15,15 +15,21 @@
 <body>
   <div class="topBar">
       <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
-            Welcome, <span id="username">Test User</span>!<br>
-          <input type="text" placeholder = "Input another User"></input><br><br>
+        Welcome, <span id="username">Test User</span>!<br>
+      <input type="text" placeholder = "Input another User"></input><br><br>
 
-          <!--text input field for image urls? Or something else?-->
-          <button type="button" id="image" onclick="addImage()">Add Image</button>
-          
-          <button type="button" onclick="logOut()">Log Out</button>
+      <!--text input field for image urls? Or something else?-->
+      <button type="button" id="image" onclick="addImage()">Add Image</button>
+      
+      <button type="button" onclick="logOut()">Log Out</button>
+
+      <div id="upload" style="visibility: hidden;">
+          <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" id="image">
+            <input type="submit" value="Upload!">
+          </form>
+      </div>
   </div>
-
   <br>
   <div id="message">&nbsp</div>
   <script src = "../static/main.js" defer></script>

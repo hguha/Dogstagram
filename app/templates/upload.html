@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dogstagram</title>
+    <!--<link rel='shortcut icon' href='../index.ico' type='image/x-icon'/>-->
+    <link rel="stylesheet" type="text/css" href="../static/style.css" />
+    <!-- include jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="topBar">
+        <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
+        Welcome, <span id="username">Test User</span>!<br>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="image" id="image">
+            <input type="submit" value="Upload!">
+        </form>
+    </div>
+    <br>
+    <div id="message">&nbsp</div>
+    <script src="../static/main.js" defer></script>
+</body>
+</html>

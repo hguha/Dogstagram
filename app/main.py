@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, Response, redirect, session, 
 import os.path
 import json
 import hashlib
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -67,6 +68,25 @@ def before_request():
 def dropsession():
     session.pop('user', None)
     return redirect(url_for('login'))
+
+@app.route('/upload', methods=["GET", "POST"])
+def upload_page():
+    if not g.user:
+        return redirect(url_for('login'))
+    if request.method == "GET":
+        return render_template('upload.html')
+    elif request.method == "POST":
+        if 'image' not in request.files:
+            return redirect(url_for('landing'))
+        file = request.files['image']
+        if file.filename == '':
+            flash('No selected filename.')
+            return redirect(url_for('landing'))
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join('app/img', filename))    
+            return redirect(url_for('landing'))
+        
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)

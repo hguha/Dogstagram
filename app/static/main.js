@@ -130,9 +130,12 @@ function addImage()
   });
 }
 
-
-
 function logOut()
 {
-    window.location.href = '/dropsession'
+    window.location.href = '/dropsession';
+}
+
+function uploadImage()
+{
+    document.querySelector('#upload').style.visibility = "visible";
 }
