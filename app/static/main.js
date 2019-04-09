@@ -2,6 +2,19 @@ function login() {
     //validate it or whatever I'm confused by this
     var username = document.getElementById("username");
     var password = document.getElementById("password");
+
+    $.ajax({
+        type: "POST",
+        url: '/login',
+        data: {
+          json_string: JSON.stringify({username: username.value, password: password.value})
+        },
+        success: function(response){
+            console.log(response)
+            //goes to landing after login but will return to login if user does not exist
+            window.location.href = '/landing'
+        }
+    })    
     console.log(password.value)
   if ((password.value == "password") && (username.value == "username"))
   {
