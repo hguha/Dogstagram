@@ -76,8 +76,5 @@ function signup()
 
 function logOut()
 {
-  if(confirm("are you sure you want to log out?"))
-  {
-       window.location.href = "index.html";
-  }
+    window.location.href = '/dropsession'
 }
