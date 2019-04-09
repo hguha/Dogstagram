@@ -61,7 +61,14 @@ function login() {
         success: function(response){
             console.log(response)
             //goes to landing after login but will return to login if user does not exist
-            window.location.href = '/landing'
+            if(response=="False")
+            {
+                window.alert("Incorrect username or password")
+                window.location.href = '/login'
+            }
+            else{
+                window.location.href = '/landing'
+            }
         }
     })
     console.log(password.value)
@@ -85,11 +92,19 @@ function signup()
         type: "POST",
         url: '/signup',
         data: {
-          json_string: JSON.stringify({username: username1.value, password: password1.value})
+          json_string: JSON.stringify({username: userInput, password: passInput})
         },
         success: function(response){
             //goes to landing after signup
-            window.location.href = '/landing'
+            if(response=="False")
+            {
+                window.alert("Username already taken")
+                window.location.href = '/login'
+            }
+            else{
+                window.location.href = '/landing'
+            }
+
         }
     })
 

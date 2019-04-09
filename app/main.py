@@ -2,6 +2,11 @@ from flask import Flask, render_template, request, Response, redirect, session, 
 import os.path
 import json
 import hashlib
+<<<<<<< HEAD
+=======
+from UserInfo import AddUser
+from UserInfo import CheckCredentials
+>>>>>>> 491cfe6654feaf0b9916b4c1d3dda9bd568e0c42
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -25,9 +30,11 @@ def login():
         print(hashed_password)
 
         ##this if statement should check user and hashed_password against db
-        if ((d['username'] == 'user')): 
+        if (CheckCredentials(d['username'],hashed_password)): 
             ##starts session with this user
             session['user'] = d['username']
+        else:
+            return ("False")
     ##returns template if its not a POST
     return render_template('index.html')
 
@@ -43,11 +50,11 @@ def signup():
         h = hashlib.md5(d['password'].encode())
         hashed_password = h.hexdigest()
         print(hashed_password)
-
-        ## need to add user and hashed pass to db here
-
+        if AddUser(d['username'],hashed_password):
         ##starts session with this user
-        session['user'] = d['username']
+            session['user'] = d['username']
+        else:
+            return "False"
 
     return render_template('index.html')
 
@@ -90,3 +97,4 @@ def upload_page():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
+
