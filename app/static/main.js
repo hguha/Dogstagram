@@ -16,25 +16,18 @@ function login() {
         }
     })    
     console.log(password.value)
-  if ((password.value == "password") && (username.value == "username"))
-  {
-     window.location.href = "landing.html";
-  }
-  else
-  {
-      alert("The username or password you entered doesn't exist!");
-  }
 }
 
 
 function signup()
 {
-
+    var username1 = document.getElementById("username");
+    var password1 = document.getElementById("password");
     $.ajax({
         type: "POST",
         url: '/signup',
         data: {
-          json_string: JSON.stringify({username: username.value, password: password.value})
+          json_string: JSON.stringify({username: username1.value, password: password1.value})
         },
         success: function(response){
             //goes to landing after signup
