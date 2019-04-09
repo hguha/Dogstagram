@@ -9,13 +9,13 @@ var config = {
 };
 firebase.initializeApp(config);
 
-//set up document reference
-var firestore = firebase.firestore();
-const docRef = firestore.collection("users")
-
 
 
 function login() {
+  //set up document reference
+  var firestore = firebase.firestore();
+  let docRef = firestore.collection("users")
+
   //get user and password from front end
   const username = document.querySelector("#username");
   const userInput = username.value;
@@ -71,8 +71,16 @@ function login() {
 
 function signup()
 {
-    var username1 = document.getElementById("username");
-    var password1 = document.getElementById("password");
+  //set up document reference
+  var firestore = firebase.firestore();
+  let docRef = firestore.collection("users")
+
+  //get user and password from front end
+  const username = document.querySelector("#username");
+  const userInput = username.value;
+  const password = document.querySelector("#password");
+  const passInput = password.value;
+
     $.ajax({
         type: "POST",
         url: '/signup',
@@ -85,12 +93,6 @@ function signup()
         }
     })
 
-  //get user and password from front end
-  const username = document.querySelector("#username");
-  const userInput = username.value;
-  const password = document.querySelector("#password");
-  const passInput = password.value;
-
   // Add a new document with a generated id.
   firestore.collection("users").add({
       user: userInput,
@@ -98,6 +100,30 @@ function signup()
   })
   .then(function(docRef) {
       console.log("Document written with ID: ", docRef.id);
+  })
+  .catch(function(error) {
+      console.error("Error adding document: ", error);
+  });
+}
+
+
+
+function addImage()
+{
+  //set up document reference
+  var firestore = firebase.firestore();
+  let docRef = firestore.collection("images")
+
+  //get image url from front end
+  const img = document.querySelector("#image");
+  const imgInput = img.value;
+
+  // Add a new document with a generated id.
+  docRef.add({
+      location: imgInput
+  })
+  .then(function(docRef) {
+      console.log("Document written with ID: ", docRef.location);
   })
   .catch(function(error) {
       console.error("Error adding document: ", error);

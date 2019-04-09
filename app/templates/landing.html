@@ -4,6 +4,11 @@
   <title>Dogstagram</title>
   <!--<link rel='shortcut icon' href='../index.ico' type='image/x-icon'/>-->
   <link rel="stylesheet" type="text/css" href="../static/style.css"/>
+  
+  <!-- Add the Firebase and Cloud Firestore libraries to app -->
+  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-firestore.js"></script>
+
   <!-- include jquery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -12,7 +17,7 @@
       <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
             Welcome, <span id="username">Test User</span>!<br>
           <input type="text" placeholder = "Input another User"></input><br><br>
-          <button type="button" onclick="addIMage()">Add Image</button>
+          <button type="button" id="image" onclick="addImage()">Add Image</button>
           <button type="button" onclick="logOut()">Log Out</button>
   </div>
 
