@@ -16,6 +16,20 @@ function login() {
 
 function signup()
 {
+
+    $.ajax({
+        type: "POST",
+        url: '/signup',
+        data: {
+          json_string: JSON.stringify({username: username.value, password: password.value})
+        },
+        success: function(response){
+            //goes to landing after signup
+            window.location.href = '/landing'
+        }
+    })  
+
+    
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyAI5CEVqPwnDM7p6WmDIyQLx2V6QdfL2Nc",
