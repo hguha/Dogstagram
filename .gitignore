@@ -1,1 +1,3 @@
 **/UserPictures/**
+
+!app/static/UserPictures/.gitkeep
