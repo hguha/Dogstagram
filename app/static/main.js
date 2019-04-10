@@ -154,3 +154,25 @@ function uploadImage()
 {
     document.querySelector('#upload').style.visibility = "visible";
 }
+
+function fetchImages()
+{
+    $.ajax({
+        type: "GET",
+        url: '/user/images',
+        success: function (response) {
+            imagesDiv = document.querySelector("#images");
+            for (let image of JSON.parse(response)) {
+                let newImg = document.createElement("img");
+                newImg.src = image;
+                imagesDiv.appendChild(newImg);
+            }
+        }
+    });
+}
+
+window.onload = () => {
+    if (window.location.pathname == '/landing') {
+        fetchImages();
+    }
+}

@@ -1,12 +1,9 @@
 from flask import Flask, render_template, request, Response, redirect, session, url_for, g
+from glob import glob
 import os.path
 import json
 import hashlib
-<<<<<<< HEAD
-=======
-from UserInfo import AddUser
-from UserInfo import CheckCredentials
->>>>>>> 491cfe6654feaf0b9916b4c1d3dda9bd568e0c42
+from UserInfo import AddUser, AddFolder, CheckCredentials
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -90,11 +87,24 @@ def upload_page():
             flash('No selected filename.')
             return redirect(url_for('landing'))
         if file:
+            AddFolder(g.user)
             filename = secure_filename(file.filename)
-            file.save(os.path.join('app/img', filename))    
+            file.save(os.path.join('static', 'UserPictures', g.user, filename))    
             return redirect(url_for('landing'))
-        
+
+@app.route('/user/<username>/images')
+def getUserImages(username):
+    if not g.user:
+        return redirect(url_for('login'))
+
+    files = glob(os.path.join('static', 'UserPictures', username, '*'))
+    return json.dumps(files)
+
+@app.route('/user/images')
+def getCurrentUserImages():
+    if not g.user:
+        return redirect(url_for('login'))
+    return getUserImages(g.user)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
-

@@ -31,5 +31,8 @@ def CheckCredentials(username,password):
     return False
 
 def AddFolder(username):
-    newFolder = "./UserPictures/" + username
-    os.mkdir(newFolder) 
+    try:
+        newFolder = os.getcwd() + "static/UserPictures/" + username
+        os.mkdir(newFolder)
+    except FileExistsError:
+        pass
