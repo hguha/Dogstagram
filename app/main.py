@@ -9,13 +9,24 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+
 @app.route('/', methods=['GET'])
 def main():
+    """Loads basic frontward facing login page
+
+    Returns:
+        html: The rendered index.html template
+    """
     return render_template('index.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Logs a user in if valid login is provided
+
+    Returns:
+        html: The rendered index.html template
+    """
     if request.method == 'POST':
         s = request.form.to_dict()['json_string']
         json_acceptable_string = s.replace("'", "\"")
@@ -37,6 +48,11 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    """Creates a new user if the user signs up for Dogstagram
+    
+    Returns:
+        html: The rendered index.html template
+    """
     s = request.form.to_dict()['json_string']
     json_acceptable_string = s.replace("'", "\"")
     d = json.loads(json_acceptable_string) 
@@ -57,12 +73,19 @@ def signup():
 
 @app.route('/landing')
 def landing():
+    """Loads landing page to see photos
+    
+    Returns:
+        html: The landing.html template if logged in, login page otherwise
+    """
     if g.user:
         return render_template('landing.html')
     return redirect(url_for('login'))
 
 @app.before_request
 def before_request():
+    """Assigns the username if the user is logged in
+    """
     g.user = None
     if 'user' in session:
         g.user = session['user']
@@ -70,21 +93,30 @@ def before_request():
 
 @app.route('/dropsession')
 def dropsession():
+    """Remotes a user from session data (logging them out)
+    
+    Returns:
+        redirect: Redirects logged out user to login page
+    """
     session.pop('user', None)
     return redirect(url_for('login'))
 
 @app.route('/upload', methods=["GET", "POST"])
 def upload_page():
+    """Uploads a posted image to the user's profile
+
+    Returns:
+        redirect: Redirects user to profile page regardless
+    """
     if not g.user:
         return redirect(url_for('login'))
     if request.method == "GET":
-        return render_template('upload.html')
+        return redirect(url_for('landing'))
     elif request.method == "POST":
         if 'image' not in request.files:
             return redirect(url_for('landing'))
         file = request.files['image']
         if file.filename == '':
-            flash('No selected filename.')
             return redirect(url_for('landing'))
         if file:
             AddFolder(g.user)
@@ -94,6 +126,14 @@ def upload_page():
 
 @app.route('/user/<username>/images')
 def getUserImages(username):
+    """Gets all images that belong to a user
+    
+    Args:
+        username (str): The username to use to find images
+
+    Returns:
+        str: JSON list of image URLs
+    """
     if not g.user:
         return redirect(url_for('login'))
 
@@ -102,6 +142,11 @@ def getUserImages(username):
 
 @app.route('/user/images')
 def getCurrentUserImages():
+    """Gets all images that belong to current user
+
+    Returns:
+        str: JSON list of image URLs
+    """
     if not g.user:
         return redirect(url_for('login'))
     return getUserImages(g.user)
