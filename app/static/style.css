@@ -52,7 +52,7 @@ input
 }
 
 
-button, a
+button, a, input[type=submit]
 {
     background-color: #3c3c3c;
     border: 2px solid #3c3c3c;

@@ -10,7 +10,7 @@ var config = {
 firebase.initializeApp(config);
 
 
-
+/** Handles the login, checks the database/files to assure authentication, then pushes it to the backend */
 function login() {
   //set up document reference
   var firestore = firebase.firestore();
@@ -25,33 +25,6 @@ function login() {
   let userValid = false;
   let passvalid = false;
 
-/* currently broken
-  //query for matching username and password in Firebase
-  docRef.where("user", "==", userInput).get().then(function (doc) {
-    if (doc && doc.exists) {
-      let myData = doc.data();
-      console.log( myData );
-      if (myData.user == userInput) {
-        //userValid = true;
-        console.log( "myData.user: ");
-      }
-      if (myData.pass == passInput) {
-        //passValid = true;
-        console.log( "myData.pass: ");
-      }
-    }
-  })
-
-  console.log(password.value)
-  if ((password.value == "password") && (username.value == "username"))
-  {
-     window.location.href = "landing.html";
-  }
-  else
-  {
-      alert("The username or password you entered doesn't exist!");
-  }
-*/
     $.ajax({
         type: "POST",
         url: '/login',
@@ -75,6 +48,7 @@ function login() {
 }
 
 
+/** Stores the inputted username and password(if it doesn't exist already) in the file/database */
 
 function signup()
 {
@@ -121,8 +95,7 @@ function signup()
   });
 }
 
-
-
+/** Useless function */
 function addImage()
 {
   //set up document reference
@@ -145,16 +118,22 @@ function addImage()
   });
 }
 
+/** Drops the session if confirmed */
 function logOut()
 {
-    window.location.href = '/dropsession';
+    if(confirm("are you sure you want to log out?")
+    {
+        window.location.href = '/dropsession';
+    }
 }
 
+/** Opens the image uploader */
 function uploadImage()
 {
     document.querySelector('#upload').style.visibility = "visible";
 }
 
+/** Gets the images from the backend */
 function fetchImages()
 {
     $.ajax({
