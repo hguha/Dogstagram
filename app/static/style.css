@@ -1,7 +1,24 @@
-*
-{
-    font-family: helvetica;
+*, *::after, *::before {
+  box-sizing: border-box;
 }
+
+body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans';
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+    background-color: #eee;
+    color: #333;
+    min-height: 100vh;
+    width: 100vw;
+}
+
 .login
 {
     padding: 10%;
@@ -52,7 +69,7 @@ input
 }
 
 
-button, a, input[type=submit]
+button, a, input[type=submit], label
 {
     background-color: #3c3c3c;
     border: 2px solid #3c3c3c;
@@ -65,9 +82,39 @@ button, a, input[type=submit]
     margin-top: -10px;
     transition-duration: 0.6s;
     cursor: pointer;
+    margin: 5px;
 }
 
 button:hover, a:hover {
   background-color: white;
   color: #3c3c3c;
+}
+
+input[type=file] {
+    background-color: #333;
+    height: 0vh;
+    width: 0vw;
+    opacity: 0;
+}
+
+input[type=file]:focus + label,
+input[type=file] + label:hover {
+    background-color: white;
+    color: #3c3c3c;
+    cursor: pointer;
+}
+
+#images {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 10vh 10vw;
+}
+
+img {
+    max-width: 30vw;
+    max-height: 40vh;
+    height: auto;
+    margin: 15px;
 }

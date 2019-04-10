@@ -3,6 +3,7 @@
 <head>
   <title>Dogstagram</title>
   <!--<link rel='shortcut icon' href='../index.ico' type='image/x-icon'/>-->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="../static/style.css"/>
 
   <!-- Add the Firebase and Cloud Firestore libraries to app -->
@@ -13,27 +14,29 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-  <div class="topBar">
-      <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
-        Welcome, <span id="username">Test User</span>!<br>
-      <input type="text" placeholder = "Input another User"></input><br><br>
-
-      <!--text input field for image urls? Or something else?-->
-      <button type="button" id="image" onclick="uploadImage()">Add Image</button>
-      
-      <button type="button" onclick="logOut()">Log Out</button>
-
-      <div id="upload" style="visibility: hidden;">
-          <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="image" id="image">
-            <input type="submit" value="Upload!">
-          </form>
-      </div>
-  </div>
-  <br>
-  <div id="message">&nbsp</div>
-  <div id="images">
-
+  <div class="container">
+    <div class="topBar">
+        <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
+          Welcome!<br>
+        
+        <!--text input field for image urls? Or something else?-->
+        <button type="button" id="image" onclick="uploadImage()">Add Image</button>
+        
+        <button type="button" onclick="logOut()">Log Out</button>
+  
+        <div id="upload" style="visibility: hidden;">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+              <input type="file" name="image" id="imageUpload" required>
+              <label for="imageUpload">Choose Your Image</label>
+              <input type="submit" value="Upload!">
+            </form>
+        </div>
+    </div>
+    <br>
+    <div id="message">&nbsp</div>
+    <div id="images">
+  
+    </div>
   </div>
   <script src = "../static/main.js" defer></script>
 </body>

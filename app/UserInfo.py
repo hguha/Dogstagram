@@ -63,7 +63,7 @@ def AddFolder(username):
         username (str): The username to create image folder
     """
     try:
-        newFolder = os.getcwd() + "static/UserPictures/" + username
+        newFolder = os.getcwd() + "/static/UserPictures/" + username
         os.mkdir(newFolder)
     except FileExistsError:
         pass
