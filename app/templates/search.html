@@ -15,16 +15,8 @@
 <body>
   <div class="topBar">
       <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
-        Welcome, <span id="username">{{ user }}</span>!<br>
-      <form onsubmit="searchUsername()">
-          <input type="text" id="searchUser" placeholder = "Input another User">
-          <input type="submit" id="search" value="Search"></input><br><br>
-      </form>
-
-      <!--text input field for image urls? Or something else?-->
-      <button type="button" id="image" onclick="uploadImage()">Add Image</button>
-      
-      <button type="button" onclick="logOut()">Log Out</button>
+        Welcome to <span id="username"> {{ user }} </span>'s page!<br>
+      <br><button type="button" onclick="returnHome()">Return Home</button>
 
       <div id="upload" style="visibility: hidden;">
           <form action="/upload" method="post" enctype="multipart/form-data">

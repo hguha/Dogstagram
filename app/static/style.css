@@ -71,3 +71,7 @@ button:hover, a:hover {
   background-color: white;
   color: #3c3c3c;
 }
+
+#search {
+    width: 5%;
+}

@@ -3,7 +3,7 @@ from glob import glob
 import os.path
 import json
 import hashlib
-from UserInfo import AddUser, AddFolder, CheckCredentials
+from UserInfo import AddUser, AddFolder, CheckCredentials,UserExists
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -58,7 +58,7 @@ def signup():
 @app.route('/landing')
 def landing():
     if g.user:
-        return render_template('landing.html')
+        return render_template('landing.html', user=g.user)
     return redirect(url_for('login'))
 
 @app.before_request
@@ -94,10 +94,12 @@ def upload_page():
 
 @app.route('/user/<username>/images')
 def getUserImages(username):
-    if not g.user:
+    if not UserExists(username):
+        return "False"
+    elif not g.user:
         return redirect(url_for('login'))
-
     files = glob(os.path.join('static', 'UserPictures', username, '*'))
+    print(os.path.join('static', 'UserPictures', username, '*'))
     return json.dumps(files)
 
 @app.route('/user/images')
@@ -105,6 +107,13 @@ def getCurrentUserImages():
     if not g.user:
         return redirect(url_for('login'))
     return getUserImages(g.user)
+
+@app.route('/search/<username>')
+def search(username):
+    print (username)
+    if g.user:
+        return render_template('search.html',user=username)
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)

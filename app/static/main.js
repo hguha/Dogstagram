@@ -150,6 +150,11 @@ function logOut()
     window.location.href = '/dropsession';
 }
 
+function returnHome()
+{
+    window.location.href = '/landing';
+}
+
 function uploadImage()
 {
     document.querySelector('#upload').style.visibility = "visible";
@@ -161,6 +166,7 @@ function fetchImages()
         type: "GET",
         url: '/user/images',
         success: function (response) {
+          console.log(response)
             imagesDiv = document.querySelector("#images");
             for (let image of JSON.parse(response)) {
                 let newImg = document.createElement("img");
@@ -170,9 +176,51 @@ function fetchImages()
         }
     });
 }
+function fetchUserImages(user)
+{
+  $.ajax({
+    type: "GET",
+    url: '/user/' + user + '/images',
+    success: function (response) {
+        console.log(response)
+        imagesDiv = document.querySelector("#images");
+        for (let image of JSON.parse(response)) {
+            let newImg = document.createElement("img");
+            newImg.src =  "../" + image;
+            imagesDiv.appendChild(newImg);
+        }
+    }
+});
+}  
 
+function searchUsername()
+{
+  let targetUser = document.getElementById("searchUser").value
+  $.ajax({
+    type: "GET",
+    asyn: false,
+    url: '/search/' + targetUser,
+    success: function(response){
+        //goes to landing after signup
+        if(response=="False")
+        {
+          window.alert("Username does not exist");
+        }
+        else {
+          window.location.href = '/search/' + targetUser
+
+        }
+    }
+  })
+}
 window.onload = () => {
     if (window.location.pathname == '/landing') {
         fetchImages();
     }
+    pathArr = window.location.pathname.split('/')
+    if (pathArr[1] == 'search') {
+      fetchUserImages(pathArr[2]);
+    }
+
+    
 }
