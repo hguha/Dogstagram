@@ -90,7 +90,7 @@ button, a, input[type=submit], label
     margin: 5px;
 }
 
-button:hover, a:hover {
+button:hover, a:hover, input[type=submit]:hover, label:hover {
   background-color: white;
   color: #3c3c3c;
 }
@@ -118,8 +118,9 @@ input[type=file] + label:hover {
 }
 
 img {
-    max-width: 30vw;
-    max-height: 40vh;
+    border: 3px solid #3c3c3c;
+    max-width: 80vw;
+    max-height: 80vh;
     height: auto;
     margin: 15px;
 }

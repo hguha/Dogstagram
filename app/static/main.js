@@ -168,7 +168,7 @@ function fetchUserImages(user)
         }
     }
 });
-}  
+}
 
 function searchUsername()
 {
@@ -199,6 +199,5 @@ window.onload = () => {
       fetchUserImages(pathArr[2]);
     }
 
-    
-}
 
+}
