@@ -1,4 +1,5 @@
 **/UserPictures/**
 app/.idea/
-app/__pycache__/
+*.pyc
 !app/static/UserPictures/.gitkeep
+app/dogstagram-jm-firebase-adminsdk-pj2mb-d026c3839a.json

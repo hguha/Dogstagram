@@ -6,6 +6,7 @@ import hashlib
 from UserInfo import AddUser, AddFolder, CheckCredentials,UserExists
 from werkzeug.utils import secure_filename
 
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
@@ -38,7 +39,7 @@ def login():
         print(hashed_password)
 
         ##this if statement should check user and hashed_password against db
-        if (CheckCredentials(d['username'],hashed_password)): 
+        if (CheckCredentials(d['username'],hashed_password)):
             ##starts session with this user
             session['user'] = d['username']
         else:
@@ -49,13 +50,13 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     """Creates a new user if the user signs up for Dogstagram
-    
+
     Returns:
         html: The rendered index.html template
     """
     s = request.form.to_dict()['json_string']
     json_acceptable_string = s.replace("'", "\"")
-    d = json.loads(json_acceptable_string) 
+    d = json.loads(json_acceptable_string)
 
     ## this if shuold check to make sure that the username is not in the db
     if (True):
@@ -74,7 +75,7 @@ def signup():
 @app.route('/landing')
 def landing():
     """Loads landing page to see photos
-    
+
     Returns:
         html: The landing.html template if logged in, login page otherwise
     """
@@ -94,7 +95,7 @@ def before_request():
 @app.route('/dropsession')
 def dropsession():
     """Remotes a user from session data (logging them out)
-    
+
     Returns:
         redirect: Redirects logged out user to login page
     """
@@ -121,13 +122,13 @@ def upload_page():
         if file:
             AddFolder(g.user)
             filename = secure_filename(file.filename)
-            file.save(os.path.join('static', 'UserPictures', g.user, filename))    
+            file.save(os.path.join('static', 'UserPictures', g.user, filename))
             return redirect(url_for('landing'))
 
 @app.route('/user/<username>/images')
 def getUserImages(username):
     """Gets all images that belong to a user
-    
+
     Args:
         username (str): The username to use to find images
 
