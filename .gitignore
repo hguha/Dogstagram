@@ -1,3 +1,4 @@
 **/UserPictures/**
-
+app/.idea/
+app/__pycache__/
 !app/static/UserPictures/.gitkeep
