@@ -12,6 +12,7 @@ default_app = firebase_admin.initialize_app(cred, {
 root = db.reference()
 users_ref = root.child('users')
 
+
 def AddUser(username, password):
     """Adds a new user to the database
 
@@ -29,10 +30,9 @@ def AddUser(username, password):
     print(newEntry)
     # with open("UserInfo.txt", "a") as myfile:
     #     myfile.write(newEntry)
-    users_ref.set({
-        username: {
-            'password': password
-        }
+    users_ref.push({
+        'username': username,
+        'password': password
     })
     return True
 
@@ -55,7 +55,7 @@ def UserExists(username):
     # return False
     users = users_ref.get()
     for key, val in users.items():
-        if username == key:
+        if username == val['username']:
             return True
         return False
 
@@ -71,9 +71,11 @@ def CheckCredentials(username,password):
     """
     users = users_ref.get()
     for key, val in users.items():
-        if username == key and password == val['password']:
+        print ('###############')
+        print (val)
+        if username == val['username'] and password == val['password']:
             return True
-        return False
+    return False
     # file = open("UserInfo.txt","r")
     # fileAsString = file.read()
     # arr = fileAsString.split('\n')
