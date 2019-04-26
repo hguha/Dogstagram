@@ -2,8 +2,10 @@
 <html>
 <head>
   <title>Dogstagram</title>
-  <!--<link rel='shortcut icon' href='../index.ico' type='image/x-icon'/>-->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="../static/style.css"/>
+
 
   <!-- Add the Firebase and Cloud Firestore libraries to app -->
   <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
@@ -14,18 +16,10 @@
 </head>
 <body>
   <div class="topBar">
-      <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
-        Welcome to <span id="username"> {{ user }} </span>'s page!<br>
+        <h2>Welcome to <span id="username"> {{ user }} </span>'s page!</h2>
 
-      <br><button type="button" onclick="returnHome()">Return Home</button>
-      <button type="button" id="follower" onclick="folowUser()">Follow User</button>
-
-      <div id="upload" style="visibility: hidden;">
-          <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="image" id="image">
-            <input type="submit" value="Upload!">
-          </form>
-      </div>
+        <span class="ico"><i class="fa fa-home" onclick="returnHome()"></i></span>
+        <span class="ico"><i class="fa fa-user-friends" onclick="followUser()"></i></span>
   </div>
   <br>
   <div id="message">&nbsp</div>

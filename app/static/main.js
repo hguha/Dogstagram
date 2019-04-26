@@ -103,6 +103,7 @@ function returnHome()
 
 function myImages()
 {
+    curUser = getElementById("username");
     //should show your images
     window.location.href = '/search/' + curUser
 }
