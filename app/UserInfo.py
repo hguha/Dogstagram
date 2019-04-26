@@ -1,13 +1,17 @@
+import datetime
 import os
 import json
+from werkzeug.utils import secure_filename
 
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+from firebase_admin import storage
 
 cred = credentials.Certificate("./dogstagram-jm-firebase-adminsdk-pj2mb-d026c3839a.json")
 default_app = firebase_admin.initialize_app(cred, {
-    'databaseURL' : 'https://dogstagram-jm.firebaseio.com'
+    'databaseURL' : 'https://dogstagram-jm.firebaseio.com',
+    'storageBucket': 'dogstagram-jm.appspot.com'
 })
 root = db.reference()
 users_ref = root.child('users')
@@ -28,8 +32,7 @@ def AddUser(username, password):
     AddFolder(username)
     newEntry = username + " " + password + "\n"
     print(newEntry)
-    # with open("UserInfo.txt", "a") as myfile:
-    #     myfile.write(newEntry)
+
     users_ref.push({
         'username': username,
         'password': password
@@ -45,19 +48,14 @@ def UserExists(username):
     Returns:
         bool: Returns true if user with username exists already
     """
-    # file = open("UserInfo.txt","r")
-    # fileAsString = file.read()
-    # arr = fileAsString.split('\n')
-    # for i in range(0,len(arr)):
-    #     arr[i] = arr[i].split(' ')
-    #     if arr[i][0] == username:
-    #         return True
-    # return False
+
     users = users_ref.get()
+    if (users == None):
+        return False
     for key, val in users.items():
         if username == val['username']:
             return True
-        return False
+    return False
 
 def CheckCredentials(username,password):
     """Checks if the username and password are valid
@@ -70,20 +68,31 @@ def CheckCredentials(username,password):
         bool: Returns true if username and password match database
     """
     users = users_ref.get()
+    if (users == None):
+        return False
     for key, val in users.items():
-        print ('###############')
-        print (val)
         if username == val['username'] and password == val['password']:
             return True
     return False
-    # file = open("UserInfo.txt","r")
-    # fileAsString = file.read()
-    # arr = fileAsString.split('\n')
-    # for i in range(0,len(arr)):
-    #     arr[i] = arr[i].split(' ')
-    #     if arr[i][0] == username and arr[i][1]==password:
-    #         return True
-    # return False
+
+def upload_blob(file,username):
+    """Uploads a file to the bucket."""
+    bucket = storage.bucket()
+    blob = bucket.blob(username+"/"+secure_filename(file.filename))
+    blob.upload_from_file(file)
+
+def download_blobs(username):
+    """Downloads a file from the bucket."""
+    bucket = storage.bucket()
+    blobs = bucket.list_blobs(prefix=username)
+    a = []
+    #count = 0
+    for blob in blobs:
+        a.append(blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'))
+        #file_object = open("./static/UserPictures/"+username+"/"+blob.name,"wb+")
+        #blob.download_to_file(file_object)
+    #return file_object
+    return json.dumps(a)
 
 def AddFolder(username):
     """Add folder for current user if necessary

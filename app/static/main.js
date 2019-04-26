@@ -1,21 +1,5 @@
-//initialize Firebase
-var config = {
-  apiKey: "AIzaSyAI5CEVqPwnDM7p6WmDIyQLx2V6QdfL2Nc",
-  authDomain: "dogstagram-b019f.firebaseapp.com",
-  databaseURL: "https://dogstagram-b019f.firebaseio.com",
-  projectId: "dogstagram-b019f",
-  storageBucket: "dogstagram-b019f.appspot.com",
-  messagingSenderId: "495415462838"
-};
-firebase.initializeApp(config);
-
-
 /** Handles the login, checks the database/files to assure authentication, then pushes it to the backend */
 function login() {
-  //set up document reference
-  var firestore = firebase.firestore();
-  let docRef = firestore.collection("users")
-
   //get user and password from front end
   const username = document.querySelector("#username");
   const userInput = username.value;
@@ -50,10 +34,6 @@ function login() {
 
 function signup()
 {
-  //set up document reference
-  var firestore = firebase.firestore();
-  let docRef = firestore.collection("users")
-
   //get user and password from front end
   const username = document.querySelector("#username");
   const userInput = username.value;
@@ -79,41 +59,14 @@ function signup()
 
         }
     })
-
-  // Add a new document with a generated id.
-  firestore.collection("users").add({
-      user: userInput,
-      pass: passInput
-  })
-  .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.id);
-  })
-  .catch(function(error) {
-      console.error("Error adding document: ", error);
-  });
 }
 
 /** Useless function */
 function addImage()
 {
-  //set up document reference
-  var firestore = firebase.firestore();
-  let docRef = firestore.collection("images")
-
   //get image url from front end
   const img = document.querySelector("#image");
   const imgInput = img.value;
-
-  // Add a new document with a generated id.
-  docRef.add({
-      location: imgInput
-  })
-  .then(function(docRef) {
-      console.log("Document written with ID: ", docRef.location);
-  })
-  .catch(function(error) {
-      console.error("Error adding document: ", error);
-  });
 }
 
 /** Drops the session if confirmed */
@@ -143,6 +96,7 @@ function fetchImages()
         type: "GET",
         url: '/user/images',
         success: function (response) {
+          console.log(typeof(response))
           console.log(response)
             imagesDiv = document.querySelector("#images");
             for (let image of JSON.parse(response)) {
@@ -163,7 +117,7 @@ function fetchUserImages(user)
         imagesDiv = document.querySelector("#images");
         for (let image of JSON.parse(response)) {
             let newImg = document.createElement("img");
-            newImg.src =  "../" + image;
+            newImg.src = image;
             imagesDiv.appendChild(newImg);
         }
     }
