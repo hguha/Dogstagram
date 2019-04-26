@@ -16,7 +16,9 @@
   <div class="topBar">
       <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
         Welcome to <span id="username"> {{ user }} </span>'s page!<br>
+
       <br><button type="button" onclick="returnHome()">Return Home</button>
+      <button type="button" id="follower" onclick="folowUser()">Follow User</button>
 
       <div id="upload" style="visibility: hidden;">
           <form action="/upload" method="post" enctype="multipart/form-data">

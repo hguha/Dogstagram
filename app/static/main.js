@@ -1,10 +1,13 @@
 /** Handles the login, checks the database/files to assure authentication, then pushes it to the backend */
+
 function login() {
   //get user and password from front end
   const username = document.querySelector("#username");
   const userInput = username.value;
   const password = document.querySelector("#password");
   const passInput = password.value;
+  userN = userInput;
+  console.log(userInput);
 
   let userValid = false;
   let passvalid = false;
@@ -78,9 +81,30 @@ function logOut()
     }
 }
 
+function followUser()
+{
+    //GIANG
+}
+
+function deleteImages()
+{
+    if(confirm("are you sure you want to delete this image?"))
+    {
+        //GIANG
+    }
+}
+
+
 function returnHome()
 {
+    //Should show the images of everyone you're following
     window.location.href = '/landing';
+}
+
+function myImages()
+{
+    //should show your images
+    window.location.href = '/search/' + curUser
 }
 
 /** Opens the image uploader */
