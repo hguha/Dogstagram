@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, Response, redirect, session, url_for, g
+from flask import Flask, render_template, request, Response, redirect, session, url_for, g, send_file
 from glob import glob
 import os.path
 import json
 import hashlib
-from UserInfo import AddUser, AddFolder, CheckCredentials,UserExists
+from UserInfo import AddUser, AddFolder, CheckCredentials, UserExists, upload_blob, download_blobs
 from werkzeug.utils import secure_filename
+from dog_detector import is_dog
 
 
 app = Flask(__name__)
@@ -120,9 +121,12 @@ def upload_page():
         if file.filename == '':
             return redirect(url_for('landing'))
         if file:
-            AddFolder(g.user)
+            #AddFolder(g.user)
             filename = secure_filename(file.filename)
-            file.save(os.path.join('static', 'UserPictures', g.user, filename))
+            if is_dog(file):
+                file.seek(0)
+                upload_blob(file,g.user)
+            #file.save(os.path.join('static', 'UserPictures', g.user, filename))
             return redirect(url_for('landing'))
 
 @app.route('/user/<username>/images')
@@ -135,13 +139,16 @@ def getUserImages(username):
     Returns:
         str: JSON list of image URLs
     """
+
     if not UserExists(username):
+        print ('Got here!')
         return "False"
     elif not g.user:
         return redirect(url_for('login'))
-    files = glob(os.path.join('static', 'UserPictures', username, '*'))
-    print(os.path.join('static', 'UserPictures', username, '*'))
-    return json.dumps(files)
+
+    return download_blobs(username)
+    #files = glob(os.path.join('static', 'UserPictures', username, '*'))
+    #return json.dumps(files)
 
 @app.route('/user/images')
 def getCurrentUserImages():
@@ -156,7 +163,6 @@ def getCurrentUserImages():
 
 @app.route('/search/<username>')
 def search(username):
-    print (username)
     if g.user:
         return render_template('search.html',user=username)
     return redirect(url_for('login'))

@@ -2,13 +2,9 @@
 <html>
 <head>
   <title>Dogstagram</title>
-  <!--<link rel='shortcut icon' href='../index.ico' type='image/x-icon'/>-->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="../static/style.css"/>
-
-  <!-- Add the Firebase and Cloud Firestore libraries to app -->
-  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-firestore.js"></script>
 
   <!-- include jquery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -16,31 +12,28 @@
 <body>
   <div class="container">
     <div class="topBar">
-        <img id="profilePic" src="../static/default.jpg" onclick="logOut()"></img>
-          Welcome {{user}}!<br>
-        
-        <!--text input field for image urls? Or something else?-->
+          <h2>Welcome, {{user}}!</h2>
         <form onsubmit="searchUsername()">
           <input type="text" id="searchUser" placeholder = "Input another User">
-          <input type="submit" id="search" value="Search"></input><br><br>
         </form>
-        <button type="button" id="image" onclick="uploadImage()">Add Image</button>
-        
-        <button type="button" onclick="logOut()">Log Out</button>
-  
-        <div id="upload" style="visibility: hidden;">
+<br>
+            <label for="imageUpload"><span class="ico"><i class="fa fa-plus" onclick="uploadImage()"></i></span></label>
+            <span class="ico"><i class="fa fa-home" onclick="returnHome()"></i></span>
+            <span class="ico"><i class="fa fa-user" onclick="myImages()"></i></span>
+            <span class="ico"><i class="fa fa-sign-out-alt" onclick="logOut()"></i></span>
+
+        <span id="upload" style="visibility: hidden;">
             <form action="/upload" method="post" enctype="multipart/form-data">
               <input type="file" name="image" id="imageUpload" required>
-              <label for="imageUpload">Choose Your Image</label>
               <input type="submit" value="Upload!">
             </form>
-        </div>
+        </span>
     </div>
     <br>
     <div id="message">&nbsp</div>
     <div class="text-center">
-      <div id="images">
-  
+      <div id="images" onclick ="deleteImages()">
+
       </div>
     </div>
   </div>
