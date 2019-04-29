@@ -5,6 +5,7 @@ import json
 import hashlib
 from UserInfo import AddUser, AddFolder, CheckCredentials, UserExists, upload_blob, download_blobs
 from werkzeug.utils import secure_filename
+from dog_detector import is_dog
 
 
 app = Flask(__name__)
@@ -122,7 +123,9 @@ def upload_page():
         if file:
             #AddFolder(g.user)
             filename = secure_filename(file.filename)
-            upload_blob(file,g.user)
+            if is_dog(file):
+                file.seek(0)
+                upload_blob(file,g.user)
             #file.save(os.path.join('static', 'UserPictures', g.user, filename))
             return redirect(url_for('landing'))
 
