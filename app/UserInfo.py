@@ -57,7 +57,7 @@ def UserExists(username):
     for key, val in users.items():
         if username == key:
             return True
-        return False
+    return False
 
 def CheckCredentials(username,password):
     """Checks if the username and password are valid
