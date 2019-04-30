@@ -4,6 +4,7 @@ from keras.applications.mobilenet import preprocess_input, decode_predictions
 import numpy as np
 from keras import backend as K
 
+
 def is_dog(img_path):
     K.clear_session()
     img = image.load_img(img_path, target_size=(224, 224))
