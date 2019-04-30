@@ -3,7 +3,7 @@ from glob import glob
 import os.path
 import json
 import hashlib
-from UserInfo import AddUser, AddFolder, CheckCredentials, UserExists, upload_blob, download_blobs, delete_blob
+from UserInfo import AddUser, CheckCredentials, UserExists, upload_blob, download_blobs, delete_blob, addFollow
 from werkzeug.utils import secure_filename
 from dog_detector import is_dog
 
@@ -121,7 +121,6 @@ def upload_page():
         if file.filename == '':
             return redirect(url_for('landing'))
         if file:
-            #AddFolder(g.user)
             filename = secure_filename(file.filename)
             if is_dog(file):
                 file.seek(0)
@@ -166,6 +165,11 @@ def search(username):
     if g.user:
         return render_template('search.html',user=username)
     return redirect(url_for('login'))
+
+@app.route('/follow/<user>', methods=["POST"])
+def follow(user):
+    addFollow(g.user,user)
+    return "None"
 
 @app.route('/delete/<username>/<imagename>', methods=["POST"])
 def deleteImage(username,imagename):

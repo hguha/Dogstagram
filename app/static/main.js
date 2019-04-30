@@ -66,9 +66,9 @@ function logOut()
     }
 }
 
-function followUser()
+function followUser(user)
 {
-    //GIANG
+    $.post(`/follow/${user}`);
 }
 
 function returnHome()

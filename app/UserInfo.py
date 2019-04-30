@@ -29,9 +29,7 @@ def AddUser(username, password):
     """
     if UserExists(username):
         return False
-    AddFolder(username)
     newEntry = username + " " + password + "\n"
-    print(newEntry)
 
     users_ref.push({
         'username': username,
@@ -75,6 +73,24 @@ def CheckCredentials(username,password):
             return True
     return False
 
+def addFollow(username,user):
+    if UserExists(username):
+        if UserExists(user):
+            users = users_ref.get()
+            for key, val in users.items():
+                if username == val['username']:
+                    flag = True
+                    follows = users_ref.child(key).child('follow').get()
+                    if follows != None:
+                        for keyf, valf in follows.items():
+                            if valf['user'] == user:
+                                flag = False
+                                break
+                    if flag:
+                        users_ref.child(key).child('follow').push({'user':user})
+                    else:
+                        return "False"
+
 def upload_blob(file,username):
     """Uploads a file to the bucket."""
     bucket = storage.bucket()
@@ -92,24 +108,9 @@ def download_blobs(username):
             "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
             "name":blob.name
         })
-        #file_object = open("./static/UserPictures/"+username+"/"+blob.name,"wb+")
-        #blob.download_to_file(file_object)
-    #return file_object
     return json.dumps(a)
 
 def delete_blob(username,imagename):
     bucket = storage.bucket()
     blob = bucket.blob(username+"/"+imagename)
     blob.delete()
-
-def AddFolder(username):
-    """Add folder for current user if necessary
-
-    Args:
-        username (str): The username to create image folder
-    """
-    try:
-        newFolder = os.getcwd() + "/static/UserPictures/" + username
-        os.mkdir(newFolder)
-    except FileExistsError:
-        pass
