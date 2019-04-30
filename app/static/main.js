@@ -153,8 +153,7 @@ function searchUsername()
 {
   let targetUser = document.getElementById("searchUser").value
   $.ajax({
-    type: "GET",
-    asyn: false,
+    type: "POST",
     url: '/search/' + targetUser,
     success: function(response){
         //goes to landing after signup
@@ -164,7 +163,6 @@ function searchUsername()
         }
         else {
           window.location.href = '/search/' + targetUser
-
         }
     }
   })
@@ -177,6 +175,4 @@ window.onload = () => {
     if (pathArr[1] == 'search') {
       fetchUserImages(pathArr[2]);
     }
-
-
 }

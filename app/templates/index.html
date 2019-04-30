@@ -24,4 +24,18 @@
   </div>
 
   <script src = "../static/main.js" defer></script>
+  <script>
+      usernameinput = document.getElementById("username");
+      passwordinput = document.getElementById("password");
+      usernameinput.addEventListener("keyup",function(event) {
+          if (event.keyCode === 13) {
+              login();
+          }
+      });
+      passwordinput.addEventListener("keyup",function(event) {
+          if (event.keyCode === 13) {
+              login();
+          }
+      });
+  </script>
 </body>

@@ -161,7 +161,7 @@ def getCurrentUserImages():
         return redirect(url_for('login'))
     return getUserImages(g.user)
 
-@app.route('/search/<username>')
+@app.route('/search/<username>', methods=["GET", "POST"])
 def search(username):
     if g.user:
         return render_template('search.html',user=username)
