@@ -3,7 +3,7 @@ from glob import glob
 import os.path
 import json
 import hashlib
-from UserInfo import AddUser, CheckCredentials, UserExists, upload_blob, download_blobs, delete_blob, addFollow
+from UserInfo import AddUser, CheckCredentials, UserExists, upload_blob, download_blobs, delete_blob, addFollow, getUserNewsfeed
 from werkzeug.utils import secure_filename
 from dog_detector import is_dog
 
@@ -84,6 +84,17 @@ def landing():
         return render_template('landing.html', user=g.user)
     return redirect(url_for('login'))
 
+@app.route('/profile')
+def profile():
+    """Loads landing page to see photos
+
+    Returns:
+        html: The landing.html template if logged in, login page otherwise
+    """
+    if g.user:
+        return render_template('profile.html', user=g.user)
+    return redirect(url_for('login'))
+
 @app.before_request
 def before_request():
     """Assigns the username if the user is logged in
@@ -159,6 +170,18 @@ def getCurrentUserImages():
     if not g.user:
         return redirect(url_for('login'))
     return getUserImages(g.user)
+
+@app.route('/user/newsfeed')
+def getCurrentUserNewsfeed():
+    """Gets all images that belong to current user
+
+    Returns:
+        str: JSON list of image URLs
+    """
+    if not g.user:
+        return redirect(url_for('login'))
+    return getUserNewsfeed(g.user)
+
 
 @app.route('/search/<username>', methods=["GET", "POST"])
 def search(username):

@@ -114,3 +114,26 @@ def delete_blob(username,imagename):
     bucket = storage.bucket()
     blob = bucket.blob(username+"/"+imagename)
     blob.delete()
+
+def getUserNewsfeed(username):
+    bucket = storage.bucket()
+    a = []
+    users = users_ref.get()
+    for key, val in users.items():
+        if username == val['username']:
+            follows = users_ref.child(key).child('follow').get()
+            if follows != None:
+                for keyf, valf in follows.items():
+                    blobs = bucket.list_blobs(prefix=valf['user'])
+                    for blob in blobs:
+                        a.append({
+                            "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
+                            "name":blob.name
+                        })
+    blobs = bucket.list_blobs(prefix=username)
+    for blob in blobs:
+        a.append({
+            "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
+            "name":blob.name
+        })
+    return json.dumps(a)
