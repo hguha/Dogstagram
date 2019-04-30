@@ -2,21 +2,14 @@
 
 function login() {
   //get user and password from front end
-  const username = document.querySelector("#username");
-  const userInput = username.value;
-  const password = document.querySelector("#password");
-  const passInput = password.value;
-  userN = userInput;
-  console.log(userInput);
-
-  let userValid = false;
-  let passvalid = false;
+  let username = document.querySelector("#username").value;
+  let password = document.querySelector("#password").value;
 
     $.ajax({
         type: "POST",
         url: '/login',
         data: {
-          json_string: JSON.stringify({username: username.value, password: password.value})
+          json_string: JSON.stringify({username: username, password: password})
         },
         success: function(response){
             //goes to landing after login but will return to login if user does not exist
@@ -64,14 +57,6 @@ function signup()
     })
 }
 
-/** Useless function */
-function addImage()
-{
-  //get image url from front end
-  const img = document.querySelector("#image");
-  const imgInput = img.value;
-}
-
 /** Drops the session if confirmed */
 function logOut()
 {
@@ -86,15 +71,6 @@ function followUser()
     //GIANG
 }
 
-function deleteImages()
-{
-    if(confirm("are you sure you want to delete this image?"))
-    {
-        //GIANG
-    }
-}
-
-
 function returnHome()
 {
     //Should show the images of everyone you're following
@@ -103,7 +79,7 @@ function returnHome()
 
 function myImages()
 {
-    curUser = getElementById("username");
+    curUser = document.getElementById("username");
     //should show your images
     window.location.href = '/search/' + curUser
 }
@@ -122,11 +98,19 @@ function fetchImages()
         url: '/user/images',
         success: function (response) {
           console.log(typeof(response))
-          console.log(response)
+          //console.log(response)
             imagesDiv = document.querySelector("#images");
             for (let image of JSON.parse(response)) {
                 let newImg = document.createElement("img");
-                newImg.src = image;
+                newImg.src = image["link"];
+                newImg.onclick = function () {
+                    if(confirm("are you sure you want to delete this image?"))
+                    {
+                        $.post(`delete/${image["name"]}`);
+                        window.location.href = '/landing';
+
+                    }
+                }
                 imagesDiv.appendChild(newImg);
             }
         }
@@ -138,11 +122,11 @@ function fetchUserImages(user)
     type: "GET",
     url: '/user/' + user + '/images',
     success: function (response) {
-        console.log(response)
+        //console.log(response)
         imagesDiv = document.querySelector("#images");
         for (let image of JSON.parse(response)) {
             let newImg = document.createElement("img");
-            newImg.src = image;
+            newImg.src = image["link"];
             imagesDiv.appendChild(newImg);
         }
     }

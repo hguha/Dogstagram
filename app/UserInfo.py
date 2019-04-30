@@ -88,11 +88,19 @@ def download_blobs(username):
     a = []
     #count = 0
     for blob in blobs:
-        a.append(blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'))
+        a.append({
+            "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
+            "name":blob.name
+        })
         #file_object = open("./static/UserPictures/"+username+"/"+blob.name,"wb+")
         #blob.download_to_file(file_object)
     #return file_object
     return json.dumps(a)
+
+def delete_blob(username,imagename):
+    bucket = storage.bucket()
+    blob = bucket.blob(username+"/"+imagename)
+    blob.delete()
 
 def AddFolder(username):
     """Add folder for current user if necessary
