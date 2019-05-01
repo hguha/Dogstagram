@@ -120,12 +120,10 @@ img {
     border: 3px solid #3c3c3c;
     width: 50%;
     height: 50%;
+
 }
 
-#images {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-items: center;
-    flex-wrap: nowrap;
+.text-center
+{
+    text-align: center;
 }
