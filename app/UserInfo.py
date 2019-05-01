@@ -29,9 +29,7 @@ def AddUser(username, password):
     """
     if UserExists(username):
         return False
-    AddFolder(username)
     newEntry = username + " " + password + "\n"
-    print(newEntry)
 
     users_ref.push({
         'username': username,
@@ -75,33 +73,132 @@ def CheckCredentials(username,password):
             return True
     return False
 
+def addFollow(username,user):
+    """Adds new follow for users
+    
+    Args:
+        username (str): Current user
+        user (str): Username to follow
+    """
+    if UserExists(username):
+        if UserExists(user):
+            users = users_ref.get()
+            for key, val in users.items():
+                if username == val['username']:
+                    flag = True
+                    follows = users_ref.child(key).child('follow').get()
+                    if follows != None:
+                        for keyf, valf in follows.items():
+                            if valf['user'] == user:
+                                flag = False
+                                break
+                    if flag:
+                        users_ref.child(key).child('follow').push({'user':user})
+                    else:
+                        return "False"
+
+def isFollowed(username,user):
+    """Checks if current user is following a user
+    
+    Args:
+        username (str): Current user
+        user (str): User to check if they are following
+    
+    Returns:
+        bool: Returns whether the user is following the other user
+    """
+    users=users_ref.get()
+    for key, val in users.items():
+        if username == val['username']:
+            follows = users_ref.child(key).child('follow').get()
+            for keyf,valf in follows.items():
+                if valf['user'] == user:
+                    return True
+    return False
+
+
 def upload_blob(file,username):
-    """Uploads a file to the bucket."""
+    """Uploads a file to the bucket.
+    
+    Args:
+        file (file): File object to upload
+        username (str): Username of image uploader
+    """
     bucket = storage.bucket()
     blob = bucket.blob(username+"/"+secure_filename(file.filename))
     blob.upload_from_file(file)
 
 def download_blobs(username):
-    """Downloads a file from the bucket."""
+    """Downloads all images for a user
+    
+    Args:
+        username (str): Username to find images for
+    
+    Returns:
+        str: JSON object listing all images from user
+    """
     bucket = storage.bucket()
     blobs = bucket.list_blobs(prefix=username)
     a = []
     #count = 0
     for blob in blobs:
-        a.append(blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'))
-        #file_object = open("./static/UserPictures/"+username+"/"+blob.name,"wb+")
-        #blob.download_to_file(file_object)
-    #return file_object
+        a.append({
+            "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
+            "name":blob.name
+        })
     return json.dumps(a)
 
-def AddFolder(username):
-    """Add folder for current user if necessary
-
+def delete_blob(username,imagename):
+    """Deletes an image from the server
+    
     Args:
-        username (str): The username to create image folder
+        username (str): Username of image to delete
+        imagename (str): Name of image to delete
     """
-    try:
-        newFolder = os.getcwd() + "/static/UserPictures/" + username
-        os.mkdir(newFolder)
-    except FileExistsError:
-        pass
+    bucket = storage.bucket()
+    blob = bucket.blob(username+"/"+imagename)
+    blob.delete()
+
+def delete_user(user):
+    """Deletes passed user
+    
+    Args:
+        user (str): Username to delete
+    """
+    users=users_ref.get()
+    for key, val in users.items():
+        if user == val['username']:
+            users_ref.child(key).delete()
+            return "Success"
+    return
+
+def getUserNewsfeed(username):
+    """Gets feed of all followed accounts for current user
+    
+    Args:
+        username (str): Username to generate feed for
+    """
+    bucket = storage.bucket()
+    a = []
+    users = users_ref.get()
+    for key, val in users.items():
+        if username == val['username']:
+            follows = users_ref.child(key).child('follow').get()
+            if follows != None:
+                for keyf, valf in follows.items():
+                    blobs = bucket.list_blobs(prefix=valf['user'])
+                    for blob in blobs:
+                        a.append({
+                            "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
+                            "name":blob.name,
+                            "user":valf['user']
+                        })
+            break
+    blobs = bucket.list_blobs(prefix=username)
+    for blob in blobs:
+        a.append({
+            "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
+            "name":blob.name,
+            "user":username
+        })
+    return json.dumps(a)

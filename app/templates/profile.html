@@ -10,17 +10,6 @@
 <body>
   <div class="container">
     <div class="topBar">
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            {% if message == "Image uploaded successfully!" %}
-              <h2 class="success">{{ message }}</h2>
-            {% else %}
-              <h2 class="failure">{{ message }}</h2>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
         <h2>Welcome, {{user}}!</h2>
         <input type="text" id="searchUser" placeholder = "Input another User">
         <br>
@@ -28,6 +17,7 @@
         <span title="Home"class="ico"><i class="fa fa-home" onclick="returnHome()"></i></span>
         <span title="Profile"class="ico"><i class="fa fa-user" onclick="myImages()"></i></span>
         <span title="Logout"class="ico"><i class="fa fa-sign-out-alt" onclick="logOut()"></i></span><br>
+
         <span id="upload" style="visibility: hidden;">
             <form action="/upload" method="post" enctype="multipart/form-data">
               <input type="file" name="image" id="imageUpload" required>
@@ -38,7 +28,7 @@
     <br>
     <div id="message">&nbsp</div>
     <div class="text-center">
-      <div id="images">
+      <div title="Delete Image?" id="images">
 
       </div>
     </div>

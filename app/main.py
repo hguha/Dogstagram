@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, Response, redirect, session, url_for, g, send_file
+from flask import Flask, render_template, request, Response, redirect, session, url_for, g, send_file, jsonify, flash
 from glob import glob
 import os.path
 import json
 import hashlib
-from UserInfo import AddUser, AddFolder, CheckCredentials, UserExists, upload_blob, download_blobs
+from UserInfo import AddUser, CheckCredentials, UserExists, upload_blob, download_blobs, delete_blob, addFollow, getUserNewsfeed, isFollowed, delete_user
 from werkzeug.utils import secure_filename
 from dog_detector import is_dog
 
@@ -84,6 +84,17 @@ def landing():
         return render_template('landing.html', user=g.user)
     return redirect(url_for('login'))
 
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    """Loads landing page to see photos
+
+    Returns:
+        html: The landing.html template if logged in, login page otherwise
+    """
+    if g.user:
+        return render_template('profile.html', user=g.user)
+    return redirect(url_for('login'))
+
 @app.before_request
 def before_request():
     """Assigns the username if the user is logged in
@@ -121,11 +132,13 @@ def upload_page():
         if file.filename == '':
             return redirect(url_for('landing'))
         if file:
-            #AddFolder(g.user)
             filename = secure_filename(file.filename)
             if is_dog(file):
                 file.seek(0)
                 upload_blob(file,g.user)
+                flash("Image uploaded successfully!")
+            else:
+                flash("You can only upload dog pictures!")
             #file.save(os.path.join('static', 'UserPictures', g.user, filename))
             return redirect(url_for('landing'))
 
@@ -161,11 +174,101 @@ def getCurrentUserImages():
         return redirect(url_for('login'))
     return getUserImages(g.user)
 
-@app.route('/search/<username>')
+@app.route('/user/newsfeed')
+def getCurrentUserNewsfeed():
+    """Gets all images that belong to current user
+
+    Returns:
+        str: JSON list of image URLs
+    """
+    if not g.user:
+        return redirect(url_for('login'))
+    return getUserNewsfeed(g.user)
+
+
+@app.route('/search/<username>', methods=["GET", "POST"])
 def search(username):
+    """Searchs for user account and redirects to page for user.
+
+    Args:
+        username (str): The username to use to find images
+
+    Returns:
+        bool: Returns false if username not found
+        template: Renders search.html template if valid user
+        redirect: Redirects user to login page if not logged in
+    """
+    if not UserExists(username):
+        return "False"
     if g.user:
         return render_template('search.html',user=username)
     return redirect(url_for('login'))
 
+@app.route('/follow/<user>', methods=["POST"])
+def follow(user):
+    """Follows passed user
+    
+    Args:
+        user (str): Username to follow
+    """
+    addFollow(g.user,user)
+    return "None"
+
+@app.route('/delete/<username>/<imagename>', methods=["POST"])
+def deleteImage(username,imagename):
+    """Deletes image from user
+    
+    Args:
+        username (str): User to delete image from
+        imagename (str): Name of image to delete
+
+    Returns:
+        redirect: Redirects to the landing page always
+    """
+    if g.user == username:
+        delete_blob(username,imagename)
+    return redirect(url_for('landing'))
+
+@app.route('/currentuser', methods=["GET"])
+def getCurrentUser():
+    """Gets current logged in user
+
+    Returns:
+        str: JSON object containing the current user
+    """
+    return jsonify({
+        'username': g.user
+    })
+
+@app.route('/doesfollow/<user>', methods=["POST"])
+def doesfollow(user):
+    """Checks if user is following passed username
+    
+    Args:
+        user (str): Username to check if they are following
+
+    Returns:
+        str: JSON object containing bool if the current user is following passed user
+    """
+    return jsonify({
+        'follows': isFollowed(g.user,user)
+    })
+
+@app.route('/deleteUser/<user>',methods=["GET","POST"])
+def deleteUser(user):
+    """Deletes the passed user
+    
+    Args:
+        user (str): Username to delete
+    """
+    delete_user(user)
+    return redirect(url_for('login'))
+
+@app.route('/toLanding',methods=["GET","POST"])
+def toLanding():
+    """Redirects user to landing page
+    """
+    return redirect(url_for('landingurl'))
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
