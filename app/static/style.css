@@ -121,3 +121,11 @@ img {
     width: 50%;
     height: 50%;
 }
+
+#images {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-items: center;
+    flex-wrap: nowrap;
+}
