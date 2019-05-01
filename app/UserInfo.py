@@ -90,6 +90,16 @@ def addFollow(username,user):
                         users_ref.child(key).child('follow').push({'user':user})
                     else:
                         return "False"
+def isFollowed(username,user):
+    users=users_ref.get()
+    for key, val in users.items():
+        if username == val['username']:
+            follows = users_ref.child(key).child('follow').get()
+            for keyf,valf in follows.items():
+                if valf['user'] == user: 
+                    return True
+    return False
+
 
 def upload_blob(file,username):
     """Uploads a file to the bucket."""
@@ -114,6 +124,14 @@ def delete_blob(username,imagename):
     bucket = storage.bucket()
     blob = bucket.blob(username+"/"+imagename)
     blob.delete()
+
+def delete_user(user):
+    users=users_ref.get()
+    for key, val in users.items():
+        if user == val['username']:
+            users_ref.child(key).delete()
+            return "Success"
+    return 
 
 def getUserNewsfeed(username):
     bucket = storage.bucket()

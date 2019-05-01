@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, Response, redirect, session, url_for, g, send_file
+from flask import Flask, render_template, request, Response, redirect, session, url_for, g, send_file, jsonify
 from glob import glob
 import os.path
 import json
 import hashlib
-from UserInfo import AddUser, CheckCredentials, UserExists, upload_blob, download_blobs, delete_blob, addFollow, getUserNewsfeed
+from UserInfo import AddUser, CheckCredentials, UserExists, upload_blob, download_blobs, delete_blob, addFollow, getUserNewsfeed, isFollowed, delete_user
 from werkzeug.utils import secure_filename
 from dog_detector import is_dog
 
@@ -84,7 +84,7 @@ def landing():
         return render_template('landing.html', user=g.user)
     return redirect(url_for('login'))
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     """Loads landing page to see photos
 
@@ -185,6 +185,8 @@ def getCurrentUserNewsfeed():
 
 @app.route('/search/<username>', methods=["GET", "POST"])
 def search(username):
+    if not UserExists(username):
+        return "False"
     if g.user:
         return render_template('search.html',user=username)
     return redirect(url_for('login'))
@@ -200,5 +202,26 @@ def deleteImage(username,imagename):
         delete_blob(username,imagename)
     return redirect(url_for('landing'))
 
+@app.route('/currentuser', methods=["GET"])
+def getCurrentUser():
+    return jsonify({
+        'username': g.user
+    })
+
+@app.route('/doesfollow/<user>', methods=["POST"])
+def doesfollow(user):
+    return jsonify({
+        'follows': isFollowed(g.user,user)
+    })
+
+@app.route('/deleteUser/<user>',methods=["GET","POST"])
+def deleteUser(user):
+    delete_user(user)
+    return redirect(url_for('login'))
+
+@app.route('/toLanding',methods=["GET","POST"])
+def toLanding():
+    return redirect(url_for('landingurl'))
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
