@@ -6,6 +6,14 @@ from keras import backend as K
 
 
 def is_dog(img_path):
+    """Predicts if image contains a dog
+    
+    Args:
+        img_path (str): String containing path to image for inference
+    
+    Returns:
+        bool: Returns whether the image contains a dog according to model
+    """
     K.clear_session()
     img = image.load_img(img_path, target_size=(224, 224))
     x = image.img_to_array(img)

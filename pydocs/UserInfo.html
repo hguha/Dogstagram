@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>UserInfo Module &#8212; dogstagram  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-UserInfo">
+<span id="userinfo-module"></span><h1>UserInfo Module<a class="headerlink" href="#module-UserInfo" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="UserInfo.AddUser">
+<code class="descclassname">UserInfo.</code><code class="descname">AddUser</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.AddUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a new user to the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username of the new user</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password of the new user</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns false if user already exists, true otherwise</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.CheckCredentials">
+<code class="descclassname">UserInfo.</code><code class="descname">CheckCredentials</code><span class="sig-paren">(</span><em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.CheckCredentials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the username and password are valid</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – The username of the user to check</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password of the user to check</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns true if username and password match database</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.UserExists">
+<code class="descclassname">UserInfo.</code><code class="descname">UserExists</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.UserExists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether user still exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username to check</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns true if user with username exists already</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.addFollow">
+<code class="descclassname">UserInfo.</code><code class="descname">addFollow</code><span class="sig-paren">(</span><em>username</em>, <em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.addFollow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds new follow for users</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Current user</p></li>
+<li><p><strong>user</strong> (<em>str</em>) – Username to follow</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.delete_blob">
+<code class="descclassname">UserInfo.</code><code class="descname">delete_blob</code><span class="sig-paren">(</span><em>username</em>, <em>imagename</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.delete_blob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes an image from the server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Username of image to delete</p></li>
+<li><p><strong>imagename</strong> (<em>str</em>) – Name of image to delete</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.delete_user">
+<code class="descclassname">UserInfo.</code><code class="descname">delete_user</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.delete_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes passed user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>str</em>) – Username to delete</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.download_blobs">
+<code class="descclassname">UserInfo.</code><code class="descname">download_blobs</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.download_blobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads all images for a user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – Username to find images for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>JSON object listing all images from user</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.getUserNewsfeed">
+<code class="descclassname">UserInfo.</code><code class="descname">getUserNewsfeed</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.getUserNewsfeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets feed of all followed accounts for current user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – Username to generate feed for</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.isFollowed">
+<code class="descclassname">UserInfo.</code><code class="descname">isFollowed</code><span class="sig-paren">(</span><em>username</em>, <em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.isFollowed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if current user is following a user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – Current user</p></li>
+<li><p><strong>user</strong> (<em>str</em>) – User to check if they are following</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns whether the user is following the other user</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="UserInfo.upload_blob">
+<code class="descclassname">UserInfo.</code><code class="descname">upload_blob</code><span class="sig-paren">(</span><em>file</em>, <em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#UserInfo.upload_blob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uploads a file to the bucket.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>file</em>) – File object to upload</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – Username of image uploader</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dogstagram</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Hirsh Guha, Jordan Love, Giang Nguyen, Ryan Pope, John Quitno.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/UserInfo.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

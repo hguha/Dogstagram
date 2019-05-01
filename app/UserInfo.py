@@ -74,6 +74,12 @@ def CheckCredentials(username,password):
     return False
 
 def addFollow(username,user):
+    """Adds new follow for users
+    
+    Args:
+        username (str): Current user
+        user (str): Username to follow
+    """
     if UserExists(username):
         if UserExists(user):
             users = users_ref.get()
@@ -90,7 +96,17 @@ def addFollow(username,user):
                         users_ref.child(key).child('follow').push({'user':user})
                     else:
                         return "False"
+
 def isFollowed(username,user):
+    """Checks if current user is following a user
+    
+    Args:
+        username (str): Current user
+        user (str): User to check if they are following
+    
+    Returns:
+        bool: Returns whether the user is following the other user
+    """
     users=users_ref.get()
     for key, val in users.items():
         if username == val['username']:
@@ -102,13 +118,25 @@ def isFollowed(username,user):
 
 
 def upload_blob(file,username):
-    """Uploads a file to the bucket."""
+    """Uploads a file to the bucket.
+    
+    Args:
+        file (file): File object to upload
+        username (str): Username of image uploader
+    """
     bucket = storage.bucket()
     blob = bucket.blob(username+"/"+secure_filename(file.filename))
     blob.upload_from_file(file)
 
 def download_blobs(username):
-    """Downloads a file from the bucket."""
+    """Downloads all images for a user
+    
+    Args:
+        username (str): Username to find images for
+    
+    Returns:
+        str: JSON object listing all images from user
+    """
     bucket = storage.bucket()
     blobs = bucket.list_blobs(prefix=username)
     a = []
@@ -121,11 +149,22 @@ def download_blobs(username):
     return json.dumps(a)
 
 def delete_blob(username,imagename):
+    """Deletes an image from the server
+    
+    Args:
+        username (str): Username of image to delete
+        imagename (str): Name of image to delete
+    """
     bucket = storage.bucket()
     blob = bucket.blob(username+"/"+imagename)
     blob.delete()
 
 def delete_user(user):
+    """Deletes passed user
+    
+    Args:
+        user (str): Username to delete
+    """
     users=users_ref.get()
     for key, val in users.items():
         if user == val['username']:
@@ -134,6 +173,11 @@ def delete_user(user):
     return
 
 def getUserNewsfeed(username):
+    """Gets feed of all followed accounts for current user
+    
+    Args:
+        username (str): Username to generate feed for
+    """
     bucket = storage.bucket()
     a = []
     users = users_ref.get()

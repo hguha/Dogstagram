@@ -188,6 +188,16 @@ def getCurrentUserNewsfeed():
 
 @app.route('/search/<username>', methods=["GET", "POST"])
 def search(username):
+    """Searchs for user account and redirects to page for user.
+
+    Args:
+        username (str): The username to use to find images
+
+    Returns:
+        bool: Returns false if username not found
+        template: Renders search.html template if valid user
+        redirect: Redirects user to login page if not logged in
+    """
     if not UserExists(username):
         return "False"
     if g.user:
@@ -196,34 +206,68 @@ def search(username):
 
 @app.route('/follow/<user>', methods=["POST"])
 def follow(user):
+    """Follows passed user
+    
+    Args:
+        user (str): Username to follow
+    """
     addFollow(g.user,user)
     return "None"
 
 @app.route('/delete/<username>/<imagename>', methods=["POST"])
 def deleteImage(username,imagename):
+    """Deletes image from user
+    
+    Args:
+        username (str): User to delete image from
+        imagename (str): Name of image to delete
+
+    Returns:
+        redirect: Redirects to the landing page always
+    """
     if g.user == username:
         delete_blob(username,imagename)
     return redirect(url_for('landing'))
 
 @app.route('/currentuser', methods=["GET"])
 def getCurrentUser():
+    """Gets current logged in user
+
+    Returns:
+        str: JSON object containing the current user
+    """
     return jsonify({
         'username': g.user
     })
 
 @app.route('/doesfollow/<user>', methods=["POST"])
 def doesfollow(user):
+    """Checks if user is following passed username
+    
+    Args:
+        user (str): Username to check if they are following
+
+    Returns:
+        str: JSON object containing bool if the current user is following passed user
+    """
     return jsonify({
         'follows': isFollowed(g.user,user)
     })
 
 @app.route('/deleteUser/<user>',methods=["GET","POST"])
 def deleteUser(user):
+    """Deletes the passed user
+    
+    Args:
+        user (str): Username to delete
+    """
     delete_user(user)
     return redirect(url_for('login'))
 
 @app.route('/toLanding',methods=["GET","POST"])
 def toLanding():
+    """Redirects user to landing page
+    """
     return redirect(url_for('landingurl'))
     
 if __name__ == '__main__':

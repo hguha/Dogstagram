@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web page routing module &#8212; dogstagram  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-main">
+<span id="web-page-routing-module"></span><h1>Web page routing module<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="main.before_request">
+<code class="descclassname">main.</code><code class="descname">before_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.before_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assigns the username if the user is logged in</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.deleteImage">
+<code class="descclassname">main.</code><code class="descname">deleteImage</code><span class="sig-paren">(</span><em>username</em>, <em>imagename</em><span class="sig-paren">)</span><a class="headerlink" href="#main.deleteImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes image from user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>str</em>) – User to delete image from</p></li>
+<li><p><strong>imagename</strong> (<em>str</em>) – Name of image to delete</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Redirects to the landing page always</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>redirect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.deleteUser">
+<code class="descclassname">main.</code><code class="descname">deleteUser</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#main.deleteUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the passed user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>str</em>) – Username to delete</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.doesfollow">
+<code class="descclassname">main.</code><code class="descname">doesfollow</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#main.doesfollow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if user is following passed username</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>str</em>) – Username to check if they are following</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>JSON object containing bool if the current user is following passed user</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.dropsession">
+<code class="descclassname">main.</code><code class="descname">dropsession</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.dropsession" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remotes a user from session data (logging them out)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Redirects logged out user to login page</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>redirect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.follow">
+<code class="descclassname">main.</code><code class="descname">follow</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#main.follow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Follows passed user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>str</em>) – Username to follow</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.getCurrentUser">
+<code class="descclassname">main.</code><code class="descname">getCurrentUser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.getCurrentUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets current logged in user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>JSON object containing the current user</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.getCurrentUserImages">
+<code class="descclassname">main.</code><code class="descname">getCurrentUserImages</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.getCurrentUserImages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all images that belong to current user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>JSON list of image URLs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.getCurrentUserNewsfeed">
+<code class="descclassname">main.</code><code class="descname">getCurrentUserNewsfeed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.getCurrentUserNewsfeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all images that belong to current user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>JSON list of image URLs</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.getUserImages">
+<code class="descclassname">main.</code><code class="descname">getUserImages</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#main.getUserImages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all images that belong to a user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username to use to find images</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>JSON list of image URLs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.landing">
+<code class="descclassname">main.</code><code class="descname">landing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.landing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads landing page to see photos</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The landing.html template if logged in, login page otherwise</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>html</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.login">
+<code class="descclassname">main.</code><code class="descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs a user in if valid login is provided</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The rendered index.html template</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>html</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.main">
+<code class="descclassname">main.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads basic frontward facing login page</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The rendered index.html template</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>html</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.profile">
+<code class="descclassname">main.</code><code class="descname">profile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads landing page to see photos</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The landing.html template if logged in, login page otherwise</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>html</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.search">
+<code class="descclassname">main.</code><code class="descname">search</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#main.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searchs for user account and redirects to page for user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>username</strong> (<em>str</em>) – The username to use to find images</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns false if username not found
+template: Renders search.html template if valid user
+redirect: Redirects user to login page if not logged in</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.signup">
+<code class="descclassname">main.</code><code class="descname">signup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.signup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new user if the user signs up for Dogstagram</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The rendered index.html template</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>html</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.toLanding">
+<code class="descclassname">main.</code><code class="descname">toLanding</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.toLanding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redirects user to landing page</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.upload_page">
+<code class="descclassname">main.</code><code class="descname">upload_page</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main.upload_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uploads a posted image to the user’s profile</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Redirects user to profile page regardless</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>redirect</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dogstagram</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Hirsh Guha, Jordan Love, Giang Nguyen, Ryan Pope, John Quitno.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/main.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
