@@ -127,3 +127,12 @@ img {
 {
     text-align: center;
 }
+
+
+.success {
+    color: #0f0;
+}
+
+.failure {
+    color: #f00;
+}

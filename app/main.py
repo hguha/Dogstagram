@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Response, redirect, session, url_for, g, send_file, jsonify
+from flask import Flask, render_template, request, Response, redirect, session, url_for, g, send_file, jsonify, flash
 from glob import glob
 import os.path
 import json
@@ -136,6 +136,9 @@ def upload_page():
             if is_dog(file):
                 file.seek(0)
                 upload_blob(file,g.user)
+                flash("Image uploaded successfully!")
+            else:
+                flash("You can only upload dog pictures!")
             #file.save(os.path.join('static', 'UserPictures', g.user, filename))
             return redirect(url_for('landing'))
 
