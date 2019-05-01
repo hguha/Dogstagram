@@ -107,6 +107,10 @@ function fetchImagesforNewsfeed()
             for (let image of JSON.parse(response)) {
                 let newImg = document.createElement("img");
                 newImg.src = image["link"];
+                let newh2 = document.createElement("h2");
+                node = document.createTextNode(image["user"]);
+                newh2.appendChild(node);
+                imagesDiv.appendChild(newh2);
                 imagesDiv.appendChild(newImg);
             }
         }

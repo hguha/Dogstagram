@@ -96,7 +96,7 @@ def isFollowed(username,user):
         if username == val['username']:
             follows = users_ref.child(key).child('follow').get()
             for keyf,valf in follows.items():
-                if valf['user'] == user: 
+                if valf['user'] == user:
                     return True
     return False
 
@@ -131,7 +131,7 @@ def delete_user(user):
         if user == val['username']:
             users_ref.child(key).delete()
             return "Success"
-    return 
+    return
 
 def getUserNewsfeed(username):
     bucket = storage.bucket()
@@ -146,12 +146,15 @@ def getUserNewsfeed(username):
                     for blob in blobs:
                         a.append({
                             "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
-                            "name":blob.name
+                            "name":blob.name,
+                            "user":valf['user']
                         })
+            break
     blobs = bucket.list_blobs(prefix=username)
     for blob in blobs:
         a.append({
             "link":blob.generate_signed_url(datetime.timedelta(seconds=300), method='GET'),
-            "name":blob.name
+            "name":blob.name,
+            "user":username
         })
     return json.dumps(a)
